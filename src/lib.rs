@@ -11,7 +11,6 @@ use ibc::core::ics24_host::path::{
     AcksPath, ChannelEndsPath, ClientConnectionsPath, ClientConsensusStatePath, ClientStatePath,
     CommitmentsPath, ConnectionsPath, ReceiptsPath,
 };
-use ibc::core::ics26_routing::context::Ics26Context;
 
 use crate::error::ServerError;
 use crate::service::IbcGrpcService;
@@ -19,13 +18,12 @@ use crate::types::{Path, StoreHeight};
 
 pub type Result<T> = std::result::Result<T, ServerError>;
 
-pub async fn run_ibc_grpc<Store, Ctx>(store: Store, addr: String, ctx: Ctx)
+pub async fn run_ibc_grpc<Store>(store: Store, addr: String)
 where
     Store: IbcStore + 'static,
-    Ctx: Ics26Context + Sync + Send + 'static,
 {
     log::info!("ibc start");
-    IbcGrpcService::new(store, addr, ctx).run().await;
+    IbcGrpcService::new(store, addr).run().await;
 }
 
 pub trait IbcStore: Sync + Send {
