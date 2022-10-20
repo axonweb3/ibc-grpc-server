@@ -2,7 +2,7 @@ pub mod error;
 mod service;
 pub mod types;
 
-use ibc::core::ics02_client::{client_consensus::AnyConsensusState, client_state::AnyClientState};
+use ibc::core::ics02_client::{client_state::ClientState, consensus_state::ConsensusState};
 use ibc::core::ics03_connection::connection::ConnectionEnd;
 use ibc::core::ics04_channel::channel::ChannelEnd;
 use ibc::core::ics04_channel::commitment::{AcknowledgementCommitment, PacketCommitment};
@@ -31,13 +31,13 @@ pub trait IbcStore: Sync + Send {
         &self,
         height: StoreHeight,
         path: &ClientStatePath,
-    ) -> Result<Option<AnyClientState>>;
+    ) -> Result<Option<Box<dyn ClientState>>>;
 
     fn get_consensus_state(
         &self,
         height: StoreHeight,
         path: &ClientConsensusStatePath,
-    ) -> Result<Option<AnyConsensusState>>;
+    ) -> Result<Option<Box<dyn ConsensusState>>>;
 
     fn get_connection_end(
         &self,
