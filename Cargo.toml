@@ -2,7 +2,12 @@
 name = "ibc-grpc-server"
 version = "0.1.0"
 edition = "2021"
-authors = ["Nervos Network"]
+authors = ["Nervos Network", "Eason Gao <kaoimin@qq.com>"]
+license = "MIT"
+keywords = ["ibc", "grpc"]
+categories = ["Web programming"]
+repository = "https://github.com/axonweb3/ibc-grpc-server"
+description = "IBC gRPC server implementation."
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
