@@ -137,13 +137,14 @@ impl<Store: IbcStore + 'static> ClientQuery for IbcClientService<Store> {
             .map_err(Status::internal)?;
         let mut client_states = Vec::with_capacity(keys.len());
 
+        // Todo: fixme after the light client state defined.
         for path in keys.into_iter().filter_map(client_state_paths) {
             client_states.push(
                 self.store
                     .get_client_state(StoreHeight::Latest, &path)
-                    .map(|client_state| IdentifiedClientState {
+                    .map(|_client_state| IdentifiedClientState {
                         client_id: path.0.to_string(),
-                        client_state: Some(client_state.unwrap().into()),
+                        client_state: None,
                     })
                     .map_err(Status::data_loss)?,
             );
@@ -178,9 +179,10 @@ impl<Store: IbcStore + 'static> ClientQuery for IbcClientService<Store> {
             .map_err(Status::internal)?;
         let mut consensus_states = Vec::with_capacity(keys.len());
 
+        // Todo: fixme after light client consensus state defined.
         for path in keys.into_iter() {
             if let Ok(IbcPath::ClientConsensusState(path)) = path.try_into() {
-                let consensus_state = self
+                let _consensus_state = self
                     .store
                     .get_consensus_state(StoreHeight::Latest, &path)
                     .map_err(Status::data_loss)?;
@@ -189,7 +191,7 @@ impl<Store: IbcStore + 'static> ClientQuery for IbcClientService<Store> {
                         revision_number: path.epoch,
                         revision_height: path.height,
                     }),
-                    consensus_state: consensus_state.map(|cs| cs.into()),
+                    consensus_state: None,
                 });
             } else {
                 panic!("unexpected path")
