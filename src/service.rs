@@ -106,6 +106,7 @@ impl<Store: IbcStore> IbcClientService<Store> {
 
 #[tonic::async_trait]
 impl<Store: IbcStore + 'static> ClientQuery for IbcClientService<Store> {
+    /// Queries an IBC light client.
     async fn client_state(
         &self,
         _request: Request<QueryClientStateRequest>,
@@ -113,6 +114,7 @@ impl<Store: IbcStore + 'static> ClientQuery for IbcClientService<Store> {
         unimplemented!()
     }
 
+    /// Queries all the IBC light clients of a chain.
     async fn client_states(
         &self,
         request: Request<QueryClientStatesRequest>,
@@ -155,6 +157,8 @@ impl<Store: IbcStore + 'static> ClientQuery for IbcClientService<Store> {
         }))
     }
 
+    /// Queries a consensus state associated with a client state at
+    /// a given height.
     async fn consensus_state(
         &self,
         _request: Request<QueryConsensusStateRequest>,
@@ -162,6 +166,8 @@ impl<Store: IbcStore + 'static> ClientQuery for IbcClientService<Store> {
         unimplemented!()
     }
 
+    /// Queries all the consensus state associated with a given
+    /// client.
     async fn consensus_states(
         &self,
         request: Request<QueryConsensusStatesRequest>,
@@ -202,6 +208,7 @@ impl<Store: IbcStore + 'static> ClientQuery for IbcClientService<Store> {
         }))
     }
 
+    /// Queries the height of every consensus states associated with a given client.
     async fn consensus_state_heights(
         &self,
         _request: Request<QueryConsensusStateHeightsRequest>,
@@ -209,6 +216,7 @@ impl<Store: IbcStore + 'static> ClientQuery for IbcClientService<Store> {
         unimplemented!()
     }
 
+    /// Queries the status of an IBC client.
     async fn client_status(
         &self,
         _request: Request<QueryClientStatusRequest>,
@@ -216,6 +224,7 @@ impl<Store: IbcStore + 'static> ClientQuery for IbcClientService<Store> {
         unimplemented!()
     }
 
+    /// Queries all parameters of the ibc client.
     async fn client_params(
         &self,
         _request: Request<QueryClientParamsRequest>,
@@ -223,6 +232,7 @@ impl<Store: IbcStore + 'static> ClientQuery for IbcClientService<Store> {
         unimplemented!()
     }
 
+    /// Queries an Upgraded IBC light client.
     async fn upgraded_client_state(
         &self,
         _request: Request<QueryUpgradedClientStateRequest>,
@@ -230,6 +240,7 @@ impl<Store: IbcStore + 'static> ClientQuery for IbcClientService<Store> {
         unimplemented!()
     }
 
+    /// Queries an Upgraded IBC consensus state.
     async fn upgraded_consensus_state(
         &self,
         _request: Request<QueryUpgradedConsensusStateRequest>,
@@ -254,6 +265,7 @@ impl<Store: IbcStore> IbcConnectionService<Store> {
 
 #[tonic::async_trait]
 impl<Store: IbcStore + 'static> ConnectionQuery for IbcConnectionService<Store> {
+    /// Queries an IBC connection end.
     async fn connection(
         &self,
         request: Request<QueryConnectionRequest>,
@@ -271,6 +283,7 @@ impl<Store: IbcStore + 'static> ConnectionQuery for IbcConnectionService<Store> 
         }))
     }
 
+    /// Queries all the IBC connections of a chain.
     async fn connections(
         &self,
         _request: Request<QueryConnectionsRequest>,
@@ -310,6 +323,7 @@ impl<Store: IbcStore + 'static> ConnectionQuery for IbcConnectionService<Store> 
         }))
     }
 
+    /// Queries the connection paths associated with a client state.
     async fn client_connections(
         &self,
         request: Request<QueryClientConnectionsRequest>,
@@ -335,6 +349,7 @@ impl<Store: IbcStore + 'static> ConnectionQuery for IbcConnectionService<Store> 
         }))
     }
 
+    /// Queries the client state associated with the connection.
     async fn connection_client_state(
         &self,
         _request: Request<QueryConnectionClientStateRequest>,
@@ -342,6 +357,7 @@ impl<Store: IbcStore + 'static> ConnectionQuery for IbcConnectionService<Store> 
         todo!()
     }
 
+    /// Queries the consensus state associated with the connection.
     async fn connection_consensus_state(
         &self,
         _request: Request<QueryConnectionConsensusStateRequest>,
@@ -370,6 +386,7 @@ impl<Store: IbcStore> IbcChannelService<Store> {
 
 #[tonic::async_trait]
 impl<Store: IbcStore + 'static> ChannelQuery for IbcChannelService<Store> {
+    /// Queries an IBC Channel.
     async fn channel(
         &self,
         request: Request<QueryChannelRequest>,
@@ -396,7 +413,7 @@ impl<Store: IbcStore + 'static> ChannelQuery for IbcChannelService<Store> {
         }))
     }
 
-    /// Channels queries all the IBC channels of a chain.
+    /// Queries all the IBC channels of a chain.
     async fn channels(
         &self,
         _request: Request<QueryChannelsRequest>,
@@ -438,8 +455,7 @@ impl<Store: IbcStore + 'static> ChannelQuery for IbcChannelService<Store> {
         }))
     }
 
-    /// ConnectionChannels queries all the channels associated with a connection
-    /// end.
+    /// Queries all the channels associated with a connection end.
     async fn connection_channels(
         &self,
         request: Request<QueryConnectionChannelsRequest>,
@@ -483,7 +499,7 @@ impl<Store: IbcStore + 'static> ChannelQuery for IbcChannelService<Store> {
         }))
     }
 
-    /// ChannelClientState queries for the client state for the channel
+    /// Queries for the client state for the channel
     /// associated with the provided channel identifiers.
     async fn channel_client_state(
         &self,
@@ -492,7 +508,7 @@ impl<Store: IbcStore + 'static> ChannelQuery for IbcChannelService<Store> {
         todo!()
     }
 
-    /// ChannelConsensusState queries for the consensus state for the channel
+    /// Queries for the consensus state for the channel
     /// associated with the provided channel identifiers.
     async fn channel_consensus_state(
         &self,
@@ -508,8 +524,7 @@ impl<Store: IbcStore + 'static> ChannelQuery for IbcChannelService<Store> {
         todo!()
     }
 
-    /// PacketCommitments returns all the packet commitments hashes associated
-    /// with a channel.
+    /// Returns all the packet commitments hashes associated with a channel.
     async fn packet_commitments(
         &self,
         request: Request<QueryPacketCommitmentsRequest>,
@@ -572,8 +587,7 @@ impl<Store: IbcStore + 'static> ChannelQuery for IbcChannelService<Store> {
         }))
     }
 
-    /// PacketReceipt queries if a given packet sequence has been received on
-    /// the queried chain
+    /// Queries if a given packet sequence has been received on the queried chain
     async fn packet_receipt(
         &self,
         _request: Request<QueryPacketReceiptRequest>,
@@ -581,6 +595,7 @@ impl<Store: IbcStore + 'static> ChannelQuery for IbcChannelService<Store> {
         todo!()
     }
 
+    /// Queries a stored packet acknowledgement hash.
     async fn packet_acknowledgement(
         &self,
         _request: Request<QueryPacketAcknowledgementRequest>,
@@ -588,8 +603,7 @@ impl<Store: IbcStore + 'static> ChannelQuery for IbcChannelService<Store> {
         todo!()
     }
 
-    /// PacketAcknowledgements returns all the packet acknowledgements
-    /// associated with a channel.
+    /// Returns all the packet acknowledgements associated with a channel.
     async fn packet_acknowledgements(
         &self,
         request: Request<QueryPacketAcknowledgementsRequest>,
@@ -648,7 +662,7 @@ impl<Store: IbcStore + 'static> ChannelQuery for IbcChannelService<Store> {
         }))
     }
 
-    /// UnreceivedPackets returns all the unreceived IBC packets associated with
+    /// Returns all the unreceived IBC packets associated with
     /// a channel and sequences.
     ///
     /// QUESTION. Currently only works for unordered channels; ordered channels
@@ -691,7 +705,7 @@ impl<Store: IbcStore + 'static> ChannelQuery for IbcChannelService<Store> {
         }))
     }
 
-    /// UnreceivedAcks returns all the unreceived IBC acknowledgements
+    /// Returns all the unreceived IBC acknowledgements
     /// associated with a channel and sequences.
     async fn unreceived_acks(
         &self,
@@ -733,8 +747,7 @@ impl<Store: IbcStore + 'static> ChannelQuery for IbcChannelService<Store> {
         }))
     }
 
-    /// NextSequenceReceive returns the next receive sequence for a given
-    /// channel.
+    /// Returns the next receive sequence for a given channel.
     async fn next_sequence_receive(
         &self,
         _request: Request<QueryNextSequenceReceiveRequest>,
